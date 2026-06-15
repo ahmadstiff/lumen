@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    name: Solidity (forge test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+      - name: Install forge-std
+        run: forge install foundry-rs/forge-std --no-git --shallow --root contracts
+      - name: Run tests
+        run: forge test --root contracts -vvv
+
+  shell:
+    name: Shell (shellcheck)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install shellcheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: Lint capability + example scripts
+        run: shellcheck -e SC1091 scripts/*.sh scripts/lib/common.sh examples/*.sh
+
+  docs:
+    name: Docs (markdownlint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install markdownlint-cli
+        run: npm install -g markdownlint-cli
+      - name: Lint markdown
+        run: markdownlint -c .markdownlint.json . --ignore mcp-server/node_modules --ignore contracts/lib
+
+  mcp-server:
+    name: MCP server (tsc build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mcp-server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mcp-server/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Build (tsc --strict)
+        run: npm run build
