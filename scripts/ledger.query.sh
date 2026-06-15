@@ -269,11 +269,11 @@ if want_format markdown; then
   MD_PATH="$OUTPUT_DIR/query.md"
   {
     printf '# Lumen Ledger Query\n\n'
-    printf '- **Network**: %s (chain id %s)\n' "$NETWORK_KEY" "$CHAIN_ID"
-    printf '- **Source**: %s\n' "$SOURCE"
-    printf '- **Filters**: token=%s from=%s to=%s capability=%s\n' \
+    printf -- '- **Network**: %s (chain id %s)\n' "$NETWORK_KEY" "$CHAIN_ID"
+    printf -- '- **Source**: %s\n' "$SOURCE"
+    printf -- '- **Filters**: token=%s from=%s to=%s capability=%s\n' \
       "${TOKEN:-*}" "${FROM:-*}" "${TO:-*}" "${CAP:-*}"
-    printf '- **Total rows**: %s\n\n' "$COUNT"
+    printf -- '- **Total rows**: %s\n\n' "$COUNT"
 
     if (( COUNT == 0 )); then
       printf 'No matching entries.\n'

@@ -90,8 +90,8 @@ DECODED_JSON="$(jq -c \
           {
             kind: "Transfer",
             token: $log.address,
-            from: "0x" + ($log.topics[1] | .[26:]),
-            to:   "0x" + ($log.topics[2] | .[26:]),
+            from: ("0x" + ($log.topics[1] | .[26:])),
+            to:   ("0x" + ($log.topics[2] | .[26:])),
             amount_hex: $log.data,
             log_index: $log.logIndex
           }
@@ -99,8 +99,8 @@ DECODED_JSON="$(jq -c \
           {
             kind: "Approval",
             token: $log.address,
-            owner: "0x" + ($log.topics[1] | .[26:]),
-            spender: "0x" + ($log.topics[2] | .[26:]),
+            owner: ("0x" + ($log.topics[1] | .[26:])),
+            spender: ("0x" + ($log.topics[2] | .[26:])),
             amount_hex: $log.data,
             log_index: $log.logIndex
           }
@@ -151,15 +151,15 @@ if want_format markdown; then
   # shellcheck disable=SC2016
   {
     printf '# Lumen Receipt\n\n'
-    printf '- **Capability**: %s\n' "$CAPABILITY"
-    printf '- **Network**: %s (chain id %s)\n' "$NETWORK_KEY" "$CHAIN_ID"
-    printf '- **Tx hash**: `%s`\n' "$TX_HASH"
-    printf '- **Explorer**: %s/tx/%s\n' "$EXPLORER" "$TX_HASH"
-    printf '- **Status**: %s\n' "$( [[ "$STATUS_OK" == "true" ]] && printf 'success' || printf 'reverted')"
-    printf '- **Block**: %s\n' "$TX_BLOCK"
-    printf '- **From**: `%s`\n' "$TX_FROM"
-    printf '- **To**: `%s`\n' "$TX_TO"
-    printf '- **Gas used**: %s\n\n' "$TX_GAS_USED"
+    printf -- '- **Capability**: %s\n' "$CAPABILITY"
+    printf -- '- **Network**: %s (chain id %s)\n' "$NETWORK_KEY" "$CHAIN_ID"
+    printf -- '- **Tx hash**: `%s`\n' "$TX_HASH"
+    printf -- '- **Explorer**: %s/tx/%s\n' "$EXPLORER" "$TX_HASH"
+    printf -- '- **Status**: %s\n' "$( [[ "$STATUS_OK" == "true" ]] && printf 'success' || printf 'reverted')"
+    printf -- '- **Block**: %s\n' "$TX_BLOCK"
+    printf -- '- **From**: `%s`\n' "$TX_FROM"
+    printf -- '- **To**: `%s`\n' "$TX_TO"
+    printf -- '- **Gas used**: %s\n\n' "$TX_GAS_USED"
 
     if (( DECODED_COUNT == 0 )); then
       printf 'No ERC-20 Transfer or Approval events decoded from this transaction.\n'

@@ -17,6 +17,14 @@
 set -Eeuo pipefail
 IFS=$'\n\t'
 
+# Require bash >= 4. macOS ships bash 3.2, which lacks `mapfile` and mishandles
+# empty-array expansion under `set -u`. Fail fast with actionable guidance.
+if (( ${BASH_VERSINFO[0]:-0} < 4 )); then
+  printf 'lumen: bash >= 4 required (found %s). On macOS run: brew install bash\n' \
+    "${BASH_VERSION:-unknown}" >&2
+  exit 1
+fi
+
 # Resolve project root from this library's path (lib/ → ../.. = project root).
 __LUMEN_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LUMEN_ROOT="${LUMEN_ROOT:-$(cd "${__LUMEN_LIB_DIR}/../.." && pwd)}"
