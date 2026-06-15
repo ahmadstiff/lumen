@@ -111,9 +111,17 @@ deploying a single custom contract.
   `LUMEN_KEYSTORE` or `cast wallet`-managed accounts.
 - **Receipts include explorer URLs** so judges can verify any tx hash
   visually on `pharosscan.xyz`.
-- **Demo deployment** (Atlantic testnet) — see `examples/` and the demo
-  video for live transaction hashes. *(Add tx hashes here after Atlantic
-  smoke test completes.)*
+- **Live deployment proof (Atlantic testnet, chain 688689):**
+  - MockERC20 test token deploy — tx
+    [`0x794c…8816`](https://atlantic.pharosscan.xyz/tx/0x794c39e852518ea2480ab876bce916fc773fb7a7e4327f9c2b98883071068816),
+    token
+    [`0x4Cdc…D4E9`](https://atlantic.pharosscan.xyz/address/0x4Cdc17C2738224b282153572ef052E661086D4E9)
+  - Lumen `pay.once` — 1 lUSD ERC-20 transfer, tx
+    [`0xdabf…3148`](https://atlantic.pharosscan.xyz/tx/0xdabf122f424dd02c16631ba909b8b5614e502d73a1a8736726957551e6573148)
+    (decoded by `receipt.generate`, audited by `ledger.query`)
+  - Reproduce: [`examples/demo-flow.sh`](../examples/demo-flow.sh) (offline
+    `intent.parse` → live `pay.once` → `receipt.generate` → `ledger.query`);
+    recording shot list in [`DEMO_SCRIPT.md`](./DEMO_SCRIPT.md).
 
 ### 6. User experience and clarity of documentation
 
@@ -128,6 +136,8 @@ deploying a single custom contract.
 - **`docs/MCP.md`** — Claude Desktop / Cursor / Claude Code wiring guide.
 - **`references/<capability>.md`** — per-capability schema, error codes,
   copy-paste examples.
+- **`examples/`** — a runnable `demo-flow.sh` plus one JSON request fixture
+  per capability, so judges can reproduce the flow in one command.
 - **Per-tool MCP descriptions** explain composition rules so the agent
   doesn't need to read the bash to call the tool correctly.
 
@@ -153,8 +163,8 @@ deploying a single custom contract.
 ```bash
 # 1. Smart contracts
 forge test --root contracts                        # 24 passed
-# 2. Shell scripts
-shellcheck scripts/*.sh scripts/lib/common.sh      # 0 warnings
+# 2. Shell scripts (SC1091 "source not followed" is cosmetic only)
+shellcheck -e SC1091 scripts/*.sh scripts/lib/common.sh examples/*.sh
 # 3. Docs
 markdownlint -c .markdownlint.json . --ignore mcp-server/node_modules
 # 4. MCP server
@@ -180,7 +190,9 @@ together, with zero new on-chain surface to audit.
 
 ## Phase 2 teaser
 
-Suggested Agent Arena projects that drop straight onto Lumen:
+Full write-ups with triggers, data flows, and capability mappings live in
+[`PHASE2.md`](./PHASE2.md). In brief, Agent Arena projects that drop straight
+onto Lumen:
 
 1. **Lumen Treasury Agent** — auto-pays incoming EIP-712 invoices subject to
    per-vendor budget caps, generates monthly statements via `ledger.query` +
@@ -203,4 +215,8 @@ infra — just composition on top of the Lumen Skill.
 - Architecture: [`docs/ARCHITECTURE.md`](./ARCHITECTURE.md)
 - Security model: [`docs/SECURITY.md`](./SECURITY.md)
 - MCP wiring: [`docs/MCP.md`](./MCP.md)
+- Phase 2 mockups: [`docs/PHASE2.md`](./PHASE2.md)
+- Demo script: [`docs/DEMO_SCRIPT.md`](./DEMO_SCRIPT.md)
+- Pitch deck: [`docs/PITCH_DECK.md`](./PITCH_DECK.md)
+- Examples: [`examples/`](../examples/)
 - Pharos hackathon: <https://dorahacks.io/hackathon/pharos-phase1/detail>

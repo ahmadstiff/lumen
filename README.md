@@ -1,7 +1,10 @@
+![Lumen — Agent-Native Payments on Pharos](assets/lumen-banner.svg)
+
 # Lumen — Agent-Native Payments on Pharos
 
 > *"The light that moves money on Pharos."*
 
+[![CI](https://github.com/ahmadstiff/lumen/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmadstiff/lumen/actions/workflows/ci.yml)
 ![status](https://img.shields.io/badge/status-MVP-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![networks](https://img.shields.io/badge/networks-Atlantic%20%7C%20Pacific-violet)
@@ -18,7 +21,8 @@ It ships as four runtimes from a single source tree: **Claude Code**,
 Desktop / Cursor / VS Code agent mode.
 
 > 📨 **Hackathon submission brief:** see [`docs/HACKATHON.md`](docs/HACKATHON.md)
-> for the explicit mapping to Pharos Phase 1 judging criteria.
+> for the explicit mapping to Pharos Phase 1 judging criteria, and
+> [`docs/PHASE2.md`](docs/PHASE2.md) for concrete Phase 2 agent mockups.
 
 ## Why Lumen exists
 
@@ -59,7 +63,14 @@ capability above as an MCP tool with the same name. See
 
 ## Demo
 
-> 🎥 **Demo video:** *(coming with submission — link will appear here)*
+> 🎥 **Demo video:** *(coming with submission — link will appear here)*.
+> Shot list: [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) ·
+> slide script: [`docs/PITCH_DECK.md`](docs/PITCH_DECK.md).
+>
+> ▶️ **Reproduce locally:** [`examples/demo-flow.sh`](examples/demo-flow.sh)
+> (offline `intent.parse` + opt-in live flow). For recording, use the paced
+> one-command [`examples/record-demo.sh`](examples/record-demo.sh); see
+> [`examples/README.md`](examples/README.md).
 
 A typical end-to-end agent flow:
 
@@ -77,10 +88,20 @@ agent: "send 10 USDC to 0x7099…79C8, then split 5% of incoming royalties
 The same flow works under Claude Code, Codex CLI, OpenClaw, **and** any
 MCP client.
 
+### Live proof (Atlantic testnet)
+
+A real end-to-end run on Pharos Atlantic (chain 688689):
+
+- MockERC20 test token deploy — [`0x794c…8816`](https://atlantic.pharosscan.xyz/tx/0x794c39e852518ea2480ab876bce916fc773fb7a7e4327f9c2b98883071068816) (token [`0x4Cdc…D4E9`](https://atlantic.pharosscan.xyz/address/0x4Cdc17C2738224b282153572ef052E661086D4E9))
+- Lumen `pay.once` — 1 lUSD ERC-20 transfer — [`0xdabf…3148`](https://atlantic.pharosscan.xyz/tx/0xdabf122f424dd02c16631ba909b8b5614e502d73a1a8736726957551e6573148), decoded by `receipt.generate` and audited by `ledger.query`
+
+See [`docs/HACKATHON.md`](docs/HACKATHON.md) §5 for the full criteria mapping.
+
 ## 60-second quick start
 
 ```bash
-# 0. Prereqs — macOS: brew install foundry jq shellcheck markdownlint-cli bc node
+# 0. Prereqs — macOS ships bash 3.2, but Lumen needs bash >= 4:
+#      brew install bash foundry jq shellcheck markdownlint-cli bc node
 #    foundryup && foundryup install stable
 
 # 1. Build helper Solidity library + run tests
@@ -140,7 +161,10 @@ Same source tree, four agent runtimes:
 │   ├── SECURITY.md           # T1–T14 threat matrix
 │   ├── CAPABILITIES.md       # Consolidated capability guide
 │   ├── MCP.md                # MCP-server wiring guide
-│   └── HACKATHON.md          # Pharos Phase 1 submission brief
+│   ├── HACKATHON.md          # Pharos Phase 1 submission brief
+│   ├── PHASE2.md             # Phase 2 agent mockups
+│   ├── DEMO_SCRIPT.md        # 2–4 min demo video shot list
+│   └── PITCH_DECK.md         # slide-by-slide pitch deck script
 ├── references/               # One reference doc per capability
 │   ├── pay.once.md           # P0
 │   ├── pay.split.md          # P0
@@ -163,6 +187,12 @@ Same source tree, four agent runtimes:
 │   ├── pay.escrow.sh         # P2
 │   ├── pay.tip.sh            # P2
 │   └── intent.parse.sh       # P2
+├── examples/                 # Runnable demo + request fixtures
+│   ├── demo-flow.sh          # One-command end-to-end (offline + live)
+│   ├── record-demo.sh        # Paced presenter script for the demo video
+│   ├── deploy-test-token.sh  # Deploy a throwaway ERC-20 test token
+│   ├── requests/             # One JSON request body per capability
+│   └── README.md             # How to run offline + go live on Atlantic
 ├── mcp-server/               # TypeScript MCP server (stdio)
 │   ├── src/                  # 1 file per tool + runner + paths + server
 │   └── README.md             # Setup, smoke test, Claude Desktop wiring

@@ -1,0 +1,8 @@
+{
+  "network": "atlantic",
+  "params": {
+    "source": "local",
+    "limit": 50,
+    "formats": ["markdown", "json"]
+  }
+}

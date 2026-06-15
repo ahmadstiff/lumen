@@ -1,0 +1,8 @@
+{
+  "network": "atlantic",
+  "_comment": "Replace tx_hash with a real hash (e.g. the output of pay.once). demo-flow.sh wires this automatically from the live pay.once response.",
+  "params": {
+    "tx_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "formats": ["markdown", "json", "csv"]
+  }
+}

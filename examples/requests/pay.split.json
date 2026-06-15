@@ -1,0 +1,16 @@
+{
+  "network": "atlantic",
+  "idempotency_key": "demo-royalty-split-1",
+  "params": {
+    "token": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "mode": "multicall",
+    "recipients": [
+      "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "0x90F79bf6EB2c4f870365E785982E1f101E93b906"
+    ],
+    "shares_bps": [6000, 3000, 1000],
+    "total": "1000000",
+    "memo": "June royalty distribution (60/30/10)"
+  }
+}
