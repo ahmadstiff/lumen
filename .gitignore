@@ -1,0 +1,51 @@
+# Foundry
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+contracts/lib/
+
+# Node / MCP server
+node_modules/
+mcp-server/dist/
+mcp-server/*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.pnpm-store/
+
+# Lumen runtime state (per-user). Keep the directory placeholder.
+.lumen/*
+!.lumen/.gitkeep
+
+# Local-only agent / IDE config
+.claude/
+.cursor/
+.aider*
+
+# Generated reports (keep directory placeholder via .gitkeep)
+reports/*
+!reports/.gitkeep
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Misc caches / logs
+*.log
+.cache/
+coverage/
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+keystore/

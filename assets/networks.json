@@ -1,0 +1,38 @@
+{
+  "$schema": "./networks.schema.json",
+  "version": "1.0.0",
+  "updated_at": "2026-06-15T00:00:00Z",
+  "networks": {
+    "atlantic": {
+      "name": "Pharos Atlantic Testnet",
+      "chain_id": 688689,
+      "rpc_url": "https://atlantic.dplabs-internal.com",
+      "explorer_url": "https://atlantic.pharosscan.xyz",
+      "native_symbol": "PHRS",
+      "native_decimals": 18,
+      "is_testnet": true,
+      "contracts": {
+        "permit2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+        "multicall3": "0xcA11bde05977b3631167028862bE2a173976CA11"
+      }
+    },
+    "pacific": {
+      "name": "Pharos Pacific Mainnet",
+      "chain_id": 1672,
+      "rpc_url": "https://rpc.pharos.xyz",
+      "explorer_url": "https://pharosscan.xyz",
+      "native_symbol": "PHRS",
+      "native_decimals": 18,
+      "is_testnet": false,
+      "contracts": {
+        "permit2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+        "multicall3": "0xcA11bde05977b3631167028862bE2a173976CA11"
+      }
+    }
+  },
+  "well_known": {
+    "permit2_domain_name": "Permit2",
+    "permit2_typehash_PermitSingle": "0xf3841cd1ff0085026a6327b620b67997ce40f282c88a8e905a7a5626e310f3d0",
+    "permit2_typehash_PermitTransferFrom": "0x939c21a48a8dbe3a339d540ba6abda7d5b25a14f30b1f99f4d4ed4b59f5b6e2d"
+  }
+}
